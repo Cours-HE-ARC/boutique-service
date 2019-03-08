@@ -41,7 +41,7 @@ deploy_stage() {
 		echo "Deploy to provider:$JELASTIC_URL, with env:$ENV_NAME, projectId:$PROJECT_ID, nodeId:$NODE_ID"
         
         # appel de l'api pour lancer le build et le deploy du projet
-        DEPLOY_RESPONSE=$(curl -s "https://$JELASTIC_URL/1.0/environment/deployment/rest/builddeployproject?delay=1&envName=$ENV_NAME&session=$SESSION&nodeid=$NODE_ID&projectid=$PROJECT_ID&isSequential=false"| \ 
+        DEPLOY_RESPONSE=$(curl -s "https://$JELASTIC_URL/1.0/environment/deployment/rest/builddeployproject?delay=1&envName=$ENV_NAME&session=$SESSION&nodeid=$NODE_ID&projectid=$PROJECT_ID&isSequential=false" | \ 
 		 jq --raw-output '."result"')
 		
 		if [result -eq 0]
