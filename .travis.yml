@@ -16,8 +16,8 @@ before_script:
   
 script:
   - mvn clean install
-  - ./jelastic-stage-deploy.sh
+  - ./build/jelastic-stage-deploy.sh
   - node_modules/.bin/newman run api-tests/boutique-service.postman_collection.json -e api-tests/jelastic-stage.postman_environment.json
 
 after_success:
-  - ./jelastic-deploy.sh
+  - ./build/jelastic-deploy.sh
