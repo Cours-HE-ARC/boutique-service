@@ -1,10 +1,10 @@
 #!/bin/bash
 
-jelastic_api_url='app.jpc.infomaniak.com'
-project_id='boutique-service-stage'
-env_name='maven'
-node_id='4280'
-boutique_url='boutique-service-stage.jcloud.ik-server.com'
+JELASTIC_URL='app.jpc.infomaniak.com'
+PROJECT_ID='boutique-service-stage'
+ENV_NAME='maven'
+NODE_ID='4280'
+BOUTIQUE_URL='boutique-service-stage.jcloud.ik-server.com'
 
 
 
@@ -14,58 +14,72 @@ login() {
     echo "$JELASTIC_USER"
     echo "$JELASTIC_PASSWORD"
     
-    SESSION=$(curl -d "login=$JELASTIC_USER&password=$JELASTIC_PASSWORD" -H "Content-Type: application/x-www-form-urlencoded" -X POST "https://$jelastic_api_url/1.0/users/authentication/rest/signin" | \
+    # récupération de la valeur session dans la réponse
+    SESSION=$(curl -d "login=$JELASTIC_USER&password=$JELASTIC_PASSWORD" -H "Content-Type: application/x-www-form-urlencoded" -X POST "https://$JELASTIC_URL/1.0/users/authentication/rest/signin" | \
         sed -E 's/^.*"session":"([^"]+)".*$/\1/')
-    [ -n "$SESSION" ] || {
-        echo "Failed to login with credentials supplied"
+    
+    # test de la validite de la session
+    if [[ -n $CHAINE && $CHAINE =~ ^[0-9a-z]+$ && ${#CHAINE} -eq 36 ]]
+	then
+	    echo "Login ok, session:$SESSION"
+	else
+	    echo "Failed to login with credentials supplied"
         exit 0
-    }
-    
-    echo "Login ok, session:$SESSION"
-    
-	
-	echo "=============================== Login end ==============================="
+	fi
 }
 
 deploy_stage() {
     
-    echo "=============================== DEPLOY TO STAGE $env_name | $(date +%d.%m.%y_%H-%M-%S) ==============================="
+    echo "=============================== DEPLOY TO STAGE $ENV_NAME | $(date +%d.%m.%y_%H-%M-%S) ==============================="
 
-		echo "LasCommit: $TRAVIS_COMMIT, message: $TRAVIS_COMMIT_MESSAGE"
+		# affichage du dernier commit
+		echo "Last commit id: $TRAVIS_COMMIT, message: $TRAVIS_COMMIT_MESSAGE"
 		
-		echo "Deploy to provider:$jelastic_api_url, with env:$env_name, projectId:$project_id, nodeId:$node_id"
+		# log de déploiement
+		echo "Deploy to provider:$JELASTIC_URL, with env:$ENV_NAME, projectId:$PROJECT_ID, nodeId:$NODE_ID"
         
-        curl -s "https://$jelastic_api_url/1.0/environment/deployment/rest/builddeployproject?delay=1&envName=$env_name&session=$SESSION&nodeid=$node_id&projectid=$project_id&isSequential=false" 
+        # appel de l'api pour lancer le build et le deploy du projet
+        curl -s "https://$JELASTIC_URL/1.0/environment/deployment/rest/builddeployproject?delay=1&envName=$ENV_NAME&session=$SESSION&nodeid=$NODE_ID&projectid=$PROJECT_IS&isSequential=false" 
 		
+		# log
 		echo "Deploy command send"
-
-    echo "=============================== DEPLOY END $env_name | $(date +%d.%m.%y_%H-%M-%S) ==============================="
 }
 
 wait_about_env() {
-	echo "=============================== WAITING ABOUT ENV $env_name | $(date +%d.%m.%y_%H-%M-%S) ==============================="
+	echo "=============================== WAITING ABOUT ENV $ENV_NAME | $(date +%d.%m.%y_%H-%M-%S) ==============================="
 	
-	echo "sleeping 10 second to deploy" 
+	echo "sleeping 10 second about env is up" 
 	
+	# attente de 10s sur le déploiement
 	sleep 10
 	
-	echo "sleep end"
+	#vlog
+	echo "10s sleep end"
 	
-	echo "=============================== WAITING ABOUT ENV END $env_name | $(date +%d.%m.%y_%H-%M-%S) ==============================="
+	# tant que les comit id's ne matche pas on check avec 5 secondes d'attente
+	until check_commit_id_coherence -eq 1 ; do
+    	sleep 5
+        echo "check commit id coherence..."
+    done
 	
 }
 
 check_commit_id_coherence(){
-	COMMIT_ID=$(curl "http://$boutique_url/boutique/build-info" | \
+	
+	# récupération du commit id de l'api actuellemtn déployé
+	COMMIT_ID=$(curl "http://$BOUTIQUE_URL/boutique/build-info" | \
        jq --raw-output '."git.commit.id"')
-        
+    
+    # log du dernier commit avec le dernier commit déployée    
     echo "Commit id from API:$COMMIT_ID, commiId expected:$TRAVIS_COMMIT"    
+    
+    # comparaison des commit id
     if [ "$COMMIT_ID" == "$TRAVIS_COMMIT" ] 
     then
-      echo "match"
+      echo "comit id's match"
       return 0
     else
-      echo "dont match"
+      echo "comit id's dont match"
       return 1
     fi
 }
@@ -74,9 +88,6 @@ login
 deploy_stage
 wait_about_env
 
-until check_commit_id_coherence -eq 1 ; do
-             sleep 5
-             echo "check coherence wait to env..."
-         done
+
 
 	
