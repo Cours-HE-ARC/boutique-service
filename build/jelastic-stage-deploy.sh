@@ -55,7 +55,7 @@ wait_about_env() {
 	# attente de 10s sur le déploiement
 	sleep 10
 	
-	#vlog
+	# log
 	echo "10s sleep end"
 	
 	# tant que les comit id's ne matche pas on check avec 5 secondes d'attente
@@ -73,8 +73,9 @@ check_commit_id_coherence(){
        jq --raw-output '."git.commit.id"')
     
     # log du dernier commit avec le dernier commit déployée    
-    echo "Commit id from API:$COMMIT_ID, commiId expected:$TRAVIS_COMMIT"    
+    echo "Commit id from API:$COMMIT_ID, commit id expected:$TRAVIS_COMMIT"    
     
+   
     # comparaison des commit id
     if [ "$COMMIT_ID" == "$TRAVIS_COMMIT" ] 
     then
