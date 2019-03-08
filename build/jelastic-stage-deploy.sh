@@ -63,10 +63,10 @@ check_commit_id_coherence(){
     if [ "$COMMIT_ID" == "$TRAVIS_COMMIT" ] 
     then
       echo "match"
-      return 1
+      return 0
     else
       echo "dont match"
-      return 0
+      return 1
     fi
 }
 
@@ -74,9 +74,9 @@ login
 deploy_stage
 wait_about_env
 
- while [  !check_commit_id_coherence ]; do
+until check_commit_id_coherence -eq 1 ; do
              sleep 5
-             echo "sleeping 5"
+             echo "check coherence wait to env..."
          done
 
 	
