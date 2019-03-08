@@ -18,8 +18,10 @@ login() {
     SESSION=$(curl -d "login=$JELASTIC_USER&password=$JELASTIC_PASSWORD" -H "Content-Type: application/x-www-form-urlencoded" -X POST "https://$JELASTIC_URL/1.0/users/authentication/rest/signin" | \
         sed -E 's/^.*"session":"([^"]+)".*$/\1/')
     
+   
     # test de la validite de la session
-    if [[ -n $CHAINE && $CHAINE =~ ^[0-9a-z]+$ && ${#CHAINE} -eq 36 ]]
+    # pas vide, unqiquement caractères alpha et num, taille 36
+    if [[ -n $SESSION && $SESSION =~ ^[0-9a-z]+$ && ${#SESSION} -eq 36 ]]
 	then
 	    echo "Login ok, session:$SESSION"
 	else
