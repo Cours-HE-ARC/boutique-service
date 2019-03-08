@@ -1,0 +1,23 @@
+language: java
+
+jdk: oraclejdk8
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install jq
+
+install:
+  - npm install newman
+  
+before_script:
+  - node --version
+  - npm --version
+  - node_modules/.bin/newman --version
+  
+script:
+  - mvn clean install
+  - ./jelastic-stage-deploy.sh
+  - node_modules/.bin/newman run api-tests/boutique-service.postman_collection.json -e api-tests/jelastic-stage.postman_environment.json
+
+after_success:
+  - ./jelastic-deploy.sh

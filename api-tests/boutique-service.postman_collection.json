@@ -1,0 +1,519 @@
+{
+	"info": {
+		"_postman_id": "cd4ac725-e69d-431f-a399-bc4a4d0a4d66",
+		"name": "boutique-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/boutique/health",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a4a2b3b8-6d60-4b8b-8194-1857bf2c5c55",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"app started\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1s\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{boutique-host}}:{{boutique-port}}/boutique/health",
+					"protocol": "http",
+					"host": [
+						"{{boutique-host}}"
+					],
+					"port": "{{boutique-port}}",
+					"path": [
+						"boutique",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/biere",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec9d9985-91af-42f9-bd22-7c509c0949a0",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1s\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"noArticle exist in response\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.noArticle).to.exist;",
+							"});",
+							"",
+							"pm.test(\"noArticle size is 36\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.noArticle).to.have.lengthOf(36);",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n \t\"nom\":\"test10dsa\",\r\n\t\"idType\":\"1\",\r\n\t\"idFabricant\":\"2\",\r\n\t\"contenanceLitre\":\"0.33\",\r\n\t\"prix\":\"6.50\",\r\n\t\"stockInitial\":2\r\n }"
+				},
+				"url": {
+					"raw": "http://{{boutique-host}}:{{boutique-port}}/biere",
+					"protocol": "http",
+					"host": [
+						"{{boutique-host}}"
+					],
+					"port": "{{boutique-port}}",
+					"path": [
+						"biere"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/biere",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8f8c0988-5c25-4210-8587-c7137683f7ec",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1s\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response is an array\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.be.an('array');",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{boutique-host}}:{{boutique-port}}/biere",
+					"protocol": "http",
+					"host": [
+						"{{boutique-host}}"
+					],
+					"port": "{{boutique-port}}",
+					"path": [
+						"biere"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/boutique/fabricant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2bfab5ab-5aa1-42cf-8cd7-a4f4e6a16410",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1s\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response is an array\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.be.an('array');",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{boutique-host}}:{{boutique-port}}/boutique/fabricant",
+					"protocol": "http",
+					"host": [
+						"{{boutique-host}}"
+					],
+					"port": "{{boutique-port}}",
+					"path": [
+						"boutique",
+						"fabricant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/biere/type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b82bf2f5-6230-468e-927b-26e1d7eedcd2",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1s\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response is an array\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.be.an('array');",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{boutique-host}}:{{boutique-port}}/biere/type",
+					"protocol": "http",
+					"host": [
+						"{{boutique-host}}"
+					],
+					"port": "{{boutique-port}}",
+					"path": [
+						"biere",
+						"type"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/boutique/panier",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c9d7a55d-83b3-45b2-aaa2-e8c68ecb963c",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1s\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"noPanier exist in response\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.noPanier).to.exist;",
+							"});",
+							"",
+							"pm.test(\"noPanier size is 36\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.noPanier).to.have.lengthOf(36);",
+							"    pm.globals.set(\"noPanier\",jsonData.noPanier);",
+							"    console.log(\"NoPanier set: \" + pm.globals.get(\"noPanier\"));",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "http://{{boutique-host}}:{{boutique-port}}/boutique/panier",
+					"protocol": "http",
+					"host": [
+						"{{boutique-host}}"
+					],
+					"port": "{{boutique-port}}",
+					"path": [
+						"boutique",
+						"panier"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/boutique/panier/{noPanier}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "efdb07c5-905b-4727-8a7c-cd5f45c1c6d1",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1s\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"noPanier exist in response\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.noPanier).to.exist;",
+							"});",
+							"",
+							"pm.test(\"noArticle size is 36\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.noPanier).to.have.lengthOf(36);",
+							"    pm.globals.set(\"noPanierCree\",jsonData.noPanier)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1dd8dcff-6d8b-4999-a811-f122f7461d20",
+						"exec": [
+							"let noPanier = \"jfsjfkdslhafjkds\"",
+							"",
+							"if(!pm.globals.has(\"noPanier\")){",
+							"    pm.globals.set(\"noPanier\",noPanier)",
+							"}else{",
+							"    console.log(\"Using noPanier: \" + pm.globals.get(\"noPanier\"))",
+							"}",
+							"",
+							"console.log(\"PUT, noPanier: \" + pm.globals.get(\"noPanier\") )",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"noArticle\":\"aaaaaaaa-f0e8-4386-9628-cccccccccccc\",\n\t\"nombre\":2\n}"
+				},
+				"url": {
+					"raw": "http://{{boutique-host}}:{{boutique-port}}/boutique/panier/{{noPanier}}",
+					"protocol": "http",
+					"host": [
+						"{{boutique-host}}"
+					],
+					"port": "{{boutique-port}}",
+					"path": [
+						"boutique",
+						"panier",
+						"{{noPanier}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/boutique/panier/{noPanier}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fe0a1ebf-a2d2-4062-ba2a-b7adf38029c0",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1s\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response is an array\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql('INITIE');",
+							"    pm.expect(jsonData.noPanier).to.eql(pm.globals.get('noPanierCree'));",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ba906314-9ed9-4fa4-b0aa-53935021bb51",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{boutique-host}}:{{boutique-port}}/boutique/panier/{{noPanier}}",
+					"protocol": "http",
+					"host": [
+						"{{boutique-host}}"
+					],
+					"port": "{{boutique-port}}",
+					"path": [
+						"boutique",
+						"panier",
+						"{{noPanierCree}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/boutique/build-infos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "49f9d60b-00b9-4544-b10c-ad7fbf48a685",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1s\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response format\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"git.branch\"]).to.exist;",
+							"    pm.expect(jsonData[\"git.commit.id\"]).to.exist;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{boutique-host}}:{{boutique-port}}/boutique/build-info",
+					"protocol": "http",
+					"host": [
+						"{{boutique-host}}"
+					],
+					"port": "{{boutique-port}}",
+					"path": [
+						"boutique",
+						"build-info"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,122 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  
+	
+   <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.5.RELEASE</version>
+    </parent>
+
+<properties>
+		<spring-boot-starter-web.version>2.0.5.RELEASE</spring-boot-starter-web.version>
+		<junit.version>4.12</junit.version>
+		<maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+	</properties>
+  
+  <artifactId>boutique-service</artifactId>
+  <packaging>jar</packaging>
+
+	
+	
+
+	<dependencyManagement>
+	     <dependencies>
+	        <dependency>
+	            <groupId>org.springframework.boot</groupId>
+	            <artifactId>spring-boot-dependencies</artifactId>
+	            <version>${spring-boot-starter-web.version}</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	        </dependency>
+	        
+	        <!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>${junit.version}</version>
+		    <scope>test</scope>
+		</dependency>
+		
+	    </dependencies>
+	    
+	    
+	    
+	</dependencyManagement>
+
+	<dependencies>
+	
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		
+		<dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+		
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		</dependency>
+		
+		
+	</dependencies>
+
+
+ 	<build>
+      <plugins>
+         <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>repackage</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>    
+                <mainClass>ch.hearc.boutiqueservice.application.BoutiqueServiceApplication</mainClass>
+            </configuration>
+         </plugin>
+         
+         <plugin>
+		    <groupId>pl.project13.maven</groupId>
+		    <artifactId>git-commit-id-plugin</artifactId>
+		    <version>2.2.4</version>
+		    <executions>
+		        <execution>
+		            <id>get-the-git-infos</id>
+		            <goals>
+		                <goal>revision</goal>
+		            </goals>
+		        </execution>
+		    </executions>
+		    <configuration>
+		        <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+		        <prefix>git</prefix>
+		        <verbose>false</verbose>
+		        <generateGitPropertiesFile>true</generateGitPropertiesFile>
+		        <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+		        <format>json</format>
+		        <gitDescribe>
+		            <skip>false</skip>
+		            <always>false</always>
+		            <dirty>-dirty</dirty>
+		        </gitDescribe>
+		    </configuration>
+		</plugin>
+         
+      </plugins>
+    </build>
+    
+</project>
