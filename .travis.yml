@@ -2,6 +2,12 @@ language: java
 
 jdk: oraclejdk8
 
+addons:
+  sonarcloud:
+    organization: "cours-he-arc" 
+    token:
+      secure: 2fc5e0bfe9d59c7400536281173bf39dbc4c238e
+
 before_install:
   - sudo apt-get update
   - sudo apt-get install jq
@@ -13,9 +19,9 @@ before_script:
   - node --version
   - npm --version
   - node_modules/.bin/newman --version
-  
+ 
 script:
-  - mvn clean install
+  - - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
   - ./build/jelastic-stage-deploy.sh
   - node_modules/.bin/newman run api-tests/boutique-service.postman_collection.json -e api-tests/jelastic-stage.postman_environment.json
 
