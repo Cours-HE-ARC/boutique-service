@@ -20,4 +20,4 @@ script:
   - node_modules/.bin/newman run api-tests/boutique-service.postman_collection.json -e api-tests/jelastic-stage.postman_environment.json
 
 after_success:
-  - ./build/jelastic-deploy.sh
+  - ./build/jelastic-test-deploy.sh
