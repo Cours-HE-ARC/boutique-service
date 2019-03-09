@@ -46,7 +46,7 @@ deploy_stage() {
 		
 		echo $DEPLOY_RESPONSE
 		
-		if [$DEPLOY_RESPONSE -eq 0]
+		if [ $DEPLOY_RESPONSE -eq 0 ]
 		then
 			echo "Deploy command successfully send"
 		else
