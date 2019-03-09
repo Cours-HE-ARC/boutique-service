@@ -22,7 +22,7 @@ before_script:
  
 script:
   - mvn clean install
-  - sonar-scanner -X -Dsonar.branch=${TRAVIS_BRANCH} -Dsonar.projectVersion=${SONAR_VERSION}
+  - sonar-scanner -X -Dsonar.branch=${TRAVIS_BRANCH} -Dsonar.projectVersion=${SONAR_VERSION} -Dsonar.projectKey=boutique-service -Dsonar.projectName=boutique-service
   - ./build/jelastic-stage-deploy.sh
   - node_modules/.bin/newman run api-tests/boutique-service.postman_collection.json -e api-tests/jelastic-stage.postman_environment.json
 
