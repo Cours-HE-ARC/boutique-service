@@ -6,7 +6,7 @@ addons:
   sonarcloud:
     organization: "cours-he-arc" 
     token:
-      secure: 2fc5e0bfe9d59c7400536281173bf39dbc4c238e
+      secure: 3fd75738a5aa11b011c40e0372a4971686c3ecd4
 
 before_install:
   - sudo apt-get update
