@@ -45,7 +45,7 @@ deploy_stage() {
         
 		echo $DEPLOY_RESPONSE
 		
-		DEPLOY_RESULT=$(jq '.result' DEPLOY_RESPONSE)
+		DEPLOY_RESULT=$(jq '.result' $DEPLOY_RESPONSE)
 		
 		echo $DEPLOY_RESULT
 		
