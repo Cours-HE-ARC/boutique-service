@@ -4,7 +4,7 @@ jdk: oraclejdk8
 
 addons:
   sonarcloud:
-    organization: "Cours-HE-ARC" 
+    organization: "cours-he-arc" 
     token:
       secure: 2fc5e0bfe9d59c7400536281173bf39dbc4c238e
 
