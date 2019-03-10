@@ -49,6 +49,27 @@ wait_about_env() {
 	
 }
 
+check_commit_id_coherence(){
+	
+	# récupération du commit id de l'api actuellemtn déployé
+	COMMIT_ID=$(curl "http://$BOUTIQUE_URL/boutique/build-info" | \
+       jq --raw-output '."git.commit.id"')
+    
+    # log du dernier commit avec le dernier commit déployée    
+    echo "Commit id from API:$COMMIT_ID, commit id expected:$TRAVIS_COMMIT"    
+    
+   
+    # comparaison des commit id
+    if [ "$COMMIT_ID" == "$TRAVIS_COMMIT" ] 
+    then
+      echo "comit id's match"
+      return 0
+    else
+      echo "comit id's dont match"
+      return 1
+    fi
+}
+
 deploy_test() {
 		echo "=============================== DEPLOY TO TEST $ENV_NAME | $(date +%d.%m.%y_%H-%M-%S) ==============================="
 
