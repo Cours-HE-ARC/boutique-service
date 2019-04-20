@@ -10,6 +10,7 @@ import ch.hearc.boutiqueservice.domaine.model.TypeBiere;
 import ch.hearc.boutiqueservice.domaine.repository.BiereRepository;
 import ch.hearc.boutiqueservice.domaine.repository.FabricantRepository;
 import ch.hearc.boutiqueservice.domaine.repository.StockRepository;
+import org.springframework.transaction.annotation.*;
 
 public class BiereDomaineService {
 
@@ -23,6 +24,7 @@ public class BiereDomaineService {
 		this.stockRepository = stockRepository;
 	}
 	
+	@Transactional
 	public Biere creerBiere (CreerBiereCommande creerBiereCommande) {
 		
 		Fabricant fabricant = fabricantRepository.getFabricantById(creerBiereCommande.getIdFabricant());

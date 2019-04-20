@@ -6,6 +6,7 @@ import ch.hearc.boutiqueservice.domaine.model.Article;
 import ch.hearc.boutiqueservice.domaine.model.Panier;
 import ch.hearc.boutiqueservice.domaine.repository.ArticleRepository;
 import ch.hearc.boutiqueservice.domaine.repository.PanierRepository;
+import org.springframework.transaction.annotation.*;
 
 public class PanierDomaineService {
 
@@ -22,6 +23,7 @@ public class PanierDomaineService {
 
 
 
+	@Transactional
 	public Panier creerPanier(CreerPanierCommande creerPanierCommande) {
 		
 		Panier panier = Panier.creerPanier();
@@ -34,6 +36,8 @@ public class PanierDomaineService {
 	public Panier ajouterArticle(String noPanier, AjouterArticlePanierCommande ajouterArticlePanierCommande) {
 		
 		Panier panier = panierRepository.getPanierByNoPanier(noPanier);
+		
+		
 		
 		Article article = articleRepository.getArticleByNoArticle(ajouterArticlePanierCommande.getNoArticle());
 		

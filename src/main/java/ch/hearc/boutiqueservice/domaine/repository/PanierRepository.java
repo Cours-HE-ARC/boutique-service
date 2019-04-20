@@ -1,5 +1,7 @@
 package ch.hearc.boutiqueservice.domaine.repository;
 
+import java.util.List;
+
 import ch.hearc.boutiqueservice.domaine.model.Panier;
 
 public interface PanierRepository {
@@ -9,4 +11,6 @@ public interface PanierRepository {
 	Panier getPanierByNoPanier(String noPanier);
 
 	Panier mettreAJourPanier(Panier panier);
+
+	List<Panier> listerPaniers();
 }

@@ -4,6 +4,7 @@ package ch.hearc.boutiqueservice.domaine.model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 public class Panier {
@@ -28,6 +29,15 @@ public class Panier {
 		return panier;
 	}
 	
+	public boolean contientArticle(String noArticle) {
+		Optional<String> noArticlePresent = this.articles.keySet().stream()
+			.map(article -> 
+				article.getNoArticle()
+			).filter(articlelNo -> articlelNo.equals(noArticle))
+			.findFirst();
+		
+		return noArticlePresent.isPresent();
+	}
 	
 	public Panier withArticles(Map<Article,Integer> articles) {
 		this.articles = articles;
@@ -48,12 +58,16 @@ public class Panier {
 
 	public boolean ajouterArticle(Article article, int nombre) {
 		
-		if(status != PanierStatus.VALIDE) {
+		//ajout article seulement si etat initite
+		if(status == PanierStatus.INITIE) {
 			
-			articles.put(article, nombre);
-			
-			if(status == PanierStatus.INITIE) {
-				status = PanierStatus.PENDING;
+			if(this.contientArticle(article.getNoArticle())) {
+				articles.computeIfPresent(article, (cle,valeur) -> {
+					int nombreCommandes = valeur + nombre;
+					return nombreCommandes;
+				});
+			}else {
+				articles.put(article, nombre);
 			}
 			
 			return true;

@@ -7,13 +7,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "articles_panier")
-public class ArticlesPanierEntity {
+@Table(name = "elements_panier")
+public class ElementPanierEntity {
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setNombre(int nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setArticle(ArticleEntity article) {
+		this.article = article;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -21,7 +38,7 @@ public class ArticlesPanierEntity {
 	@Column(name = "nombre")
 	private int nombre;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne
 	private ArticleEntity article;
 	
 	public ArticleEntity getArticle() {
@@ -32,9 +49,9 @@ public class ArticlesPanierEntity {
 		return nombre;
 	}
 	
-	public ArticlesPanierEntity() {}
+	public ElementPanierEntity() {}
 
-	public ArticlesPanierEntity(ArticleEntity article, int nombre) {
+	public ElementPanierEntity(ArticleEntity article, int nombre) {
 		super();
 		this.article = article;
 		this.nombre = nombre;

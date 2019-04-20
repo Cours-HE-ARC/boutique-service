@@ -1,5 +1,7 @@
 package ch.hearc.boutiqueservice.application.service;
 
+import java.util.List;
+
 import ch.hearc.boutiqueservice.domaine.commande.AjouterArticlePanierCommande;
 import ch.hearc.boutiqueservice.domaine.commande.CreerPanierCommande;
 import ch.hearc.boutiqueservice.domaine.model.Biere;
@@ -12,4 +14,6 @@ public interface PanierService {
 	Panier ajouterArticlePanier(String noPanier, AjouterArticlePanierCommande ajouterArticlePanierCommande);
 
 	Panier getPanierByNoPanier(String noPanier);
+	
+	List<Panier> getAllPaniers();
 }

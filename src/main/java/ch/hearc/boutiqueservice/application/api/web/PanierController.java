@@ -1,5 +1,8 @@
 package ch.hearc.boutiqueservice.application.api.web;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.hearc.boutiqueservice.application.api.web.ressources.AjouterArticlePanierReponseResource;
+import ch.hearc.boutiqueservice.application.api.web.ressources.BiereRessource;
 import ch.hearc.boutiqueservice.application.api.web.ressources.CreerBiereReponseResource;
 import ch.hearc.boutiqueservice.application.api.web.ressources.CreerPanierReponseResource;
 import ch.hearc.boutiqueservice.application.api.web.ressources.PanierRessource;
@@ -33,6 +37,16 @@ public class PanierController {
 		this.panierService = panierService;
 	}
 
+	@GetMapping("/panier")
+	public ResponseEntity<List<PanierRessource>> getAllPaniers() {
+		
+		return ResponseEntity.ok(
+				panierService.getAllPaniers().stream().map(panier -> {
+					return PanierRessource.fromPanier(panier);
+				}).collect(Collectors.toList())
+		);
+	}
+	
 	@GetMapping("/panier/{panierNo}")
 	public ResponseEntity<PanierRessource> getPanierByPanierNo(@PathVariable("panierNo") String panierNo) {
 		return ResponseEntity.ok(

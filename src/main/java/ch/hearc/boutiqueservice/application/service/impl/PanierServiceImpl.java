@@ -1,5 +1,7 @@
 package ch.hearc.boutiqueservice.application.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +50,13 @@ public class PanierServiceImpl implements PanierService{
 	@Override
 	public Panier getPanierByNoPanier(String noPanier) {
 		return panierRepository.getPanierByNoPanier(noPanier);
+	}
+
+
+
+	@Override
+	public List<Panier> getAllPaniers() {
+		return panierRepository.listerPaniers();
 	}
 	
 	

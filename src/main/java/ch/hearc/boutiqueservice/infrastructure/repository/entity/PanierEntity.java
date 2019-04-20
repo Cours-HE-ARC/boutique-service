@@ -19,6 +19,47 @@ import ch.hearc.boutiqueservice.domaine.model.PanierStatus;
 @Table(name = "panier")
 public class PanierEntity {
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setNoPanier(String noPanier) {
+		this.noPanier = noPanier;
+	}
+
+	public void setStatus(PanierStatus status) {
+		this.status = status;
+	}
+
+	public void setArticles(List<ElementPanierEntity> articles) {
+		this.elements = articles;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((noPanier == null) ? 0 : noPanier.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PanierEntity other = (PanierEntity) obj;
+		if (noPanier == null) {
+			if (other.noPanier != null)
+				return false;
+		} else if (!noPanier.equals(other.noPanier))
+			return false;
+		return true;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -31,7 +72,7 @@ public class PanierEntity {
 	private PanierStatus status;
 	
 	@OneToMany
-	private List<ArticlesPanierEntity> articles;
+	private List<ElementPanierEntity> elements;
 	
 	PanierEntity () {}
 	
@@ -52,12 +93,21 @@ public class PanierEntity {
 		return id;
 	}
 
-	public List<ArticlesPanierEntity> getArticles() {
-		return articles;
+	public List<ElementPanierEntity> getElements() {
+		return elements;
 	}
 	
-	public void addArticle(ArticlesPanierEntity articleEntity) {
-		this.articles.add(articleEntity);
+	public void addElement(ElementPanierEntity articleEntity) {
+		
+		if(this.elements.contains(articleEntity)) {
+			ElementPanierEntity articlePresent = this.elements.stream().filter(article -> article.getArticle().getNoArticle().equals(articleEntity.getArticle().getNoArticle())).findFirst().get();
+			articlePresent.setNombre(articlePresent.getNombre() + articleEntity.getNombre());
+			
+		}else {
+			this.elements.add(articleEntity);
+		}
+		
+		
 	}
 	
 	
