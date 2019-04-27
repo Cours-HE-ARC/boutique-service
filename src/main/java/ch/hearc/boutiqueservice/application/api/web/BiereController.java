@@ -59,7 +59,7 @@ public class BiereController {
 		
 	}
 
-	@PreAuthorize("hasAnyAuthority('ROLE_UTILISATEUR')")
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMINISTRATEUR')")
 	@PostMapping
 	public ResponseEntity<CreerBiereReponseResource> createBiere(@RequestBody CreerBiereCommande creerBiereCommande ){
 		
